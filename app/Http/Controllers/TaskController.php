@@ -23,32 +23,32 @@ class TaskController extends Controller{
 
      public function store( Request $request  ){
 
-    $task= DB::table('tasks')->insert([
-        'name'=> $_REQUEST['name'],
-        'created_at'=> now(),
-       'updated_at'=> now()
-     ]);
+    // $task= DB::table('tasks')->insert([
+    //     'name'=> $_REQUEST['name'],
+    //     'created_at'=> now(),
+    //    'updated_at'=> now()
+    //  ]);
 
-    //  $task = new Task();
-    //  $task->name = $request-> name;
-    //  $task->save();
+     $task = new Task();
+     $task->name = $_REQUEST['name'];
+     $task->save();
 
     return redirect()->back();
     }
 
     public function delete($id){
-        DB::table('tasks')->where('id',$id)->delete();
-        return redirect()->back();
-
-        // Task::find($id)->delete();
+        // DB::table('tasks')->where('id',$id)->delete();
         // return redirect()->back();
+
+        Task::find($id)->delete();
+        return redirect()->back();
     }
 
     public function edit($id){
-        $data= DB::table('tasks')->find($id);
-        $tasks= DB::table('tasks')->orderBy('name')->get();
-        // $data= Task::find($id);
-
+        // $data= DB::table('tasks')->find($id);
+        //$tasks= DB::table('tasks')->orderBy('name')->get();
+         $data= Task::find($id);
+         $tasks = Task::all()->sortBy('name');
          return view('edit',compact('data','tasks'));
 
     }
